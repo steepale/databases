@@ -22,13 +22,57 @@ cd /home/users/a.steep/databases
 
 # Building databases
 
-# Objective on April 25th, 2017 is to annotate somatic snvs and indels with rs numbers from dbSNP.
+# Objective on April 25th, 2017 is to annotate somatic snvs and indels with rs numbers from dbSNP
 # Will download VCF files with rs numbers from dbSNP and annotate in house
 
 # dbSNP
 cd /home/users/a.steep/databases/dbsnp
 
+# Info about dbSNP as of April 25, 2017
+#Last Updated: Build 147 (Apr 14, 2016)
+#RefSNP Count: 21.3 Million
+#SubSNP Count: 57.4 Million
+#Assembly: Gallus_gallus-5.0
+#Data: Search, FTP
+#Genome Data Viewer: Gallus_gallus-5.0
+
 # Here is a download of the dbSNP file:
 wget -r -np -nH ftp://ftp.ncbi.nih.gov/snp/organisms/chicken_9031/VCF/*
 # VCF files in /home/users/a.steep/databases/dbsnp/snp/organisms/chicken_9031/VCF
+
+# Return home
+cd /home/users/a.steep/databases
+
+# Downloaded a ncbi chicken gene annotation file from ncbi ftp on may 7th, 2017
+# Location of file: ./ncbi/Gallus_gallus.gene_info.gz
+# Downloaded a ncbi human gene annotation file from ncbi ftp on may 7th, 2017
+# Location of file: ./ncbi/Homo_sapiens.gene_info.gz
+
+# May 8, 2017
+# Create files with list of samples that have undergone specific molecular tests
+# All files that have undergone DNASeq in 2014 in 017XXX-X format (both germline and tumor tissues)
+(cat ./samples/germline_sample_dnaseq_list_017NNN-N.txt; \
+cat ./samples/tumor_sample_dnaseq_list_017NNN-N.txt) | sort | uniq > \
+./samples/all_samples_dnaseq_2014_017NNN-N.txt
+
+# Create a file with all samples undergoing rnaseq in 2014 in 017XXX-X format
+(cut -d'_' -f1 ./samples/germline_sample_rnaseq_list_017NNN-N_SN.txt; \
+cat ./samples/tumor_sample_rnaseq_list_017NNN-N.txt) | sort | uniq > \
+./samples/all_samples_rnaseq_2014_017NNN-N.txt
+
+# Create a file with all samples that underwent affymetrix microarray analysis
+# ./samples/all_samples_microarrays_2014_017NNN-N.txt
+
+# Create a file with all samples that underwent cytogenetic analysis
+# ./samples/all_samples_cytogenetics_2014_017NNN-N.txt
+
+# Create a file with all samples that underwent immunohistochem
+grep 'immunohistochem' /Users/Alec/Documents/Bioinformatics/MDV_Project/sample_organization/data/tissue_collection_and_sampling_summer_2017.txt | \
+cut -f1 > ./samples/all_samples_immunohistochem_2017.txt
+
+
+
+
+
+
 
